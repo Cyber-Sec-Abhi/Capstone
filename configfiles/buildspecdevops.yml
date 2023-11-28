@@ -1,0 +1,17 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      php: 8.1
+    commands:
+      - yum update -y
+
+  build:
+    commands:
+      - echo Deploying Code to WebServer
+      - aws s3 cp s3://devopsbucketstorage/Keys/DevOps_Key.pem .
+      - chmod 400 DevOps_Key.pem
+      - scp -i DevOps_Key.pem -o StrictHostKeyChecking=no -r ./Web_Server/* ubuntu@13.59.252.207:./Web_Server
+      - ssh -i DevOps_Key.pem ubuntu@13.59.252.207 'sudo ./copy_to_server.sh'
+
