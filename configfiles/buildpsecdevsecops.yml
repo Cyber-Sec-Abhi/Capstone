@@ -14,30 +14,30 @@ phases:
       - unzip sonar-scanner-cli-4.6.2.2472-linux.zip
       - mv sonar-scanner-4.6.2.2472-linux /opt/sonar-scanner
       - chmod -R 775 /opt/sonar-scanner
-      - /opt/sonar-scanner/bin/sonar-scanner -Dsonar.projectKey=PMY-COSMETICS -Dsonar.host.url=http://3.142.246.193:9000  -Dsonar.token=sqp_d936b90e10fbb9eb9778f7a1387860dbe3407aaf
-      - echo "STATIC ANALYIS IS DONE PLEASE GO to http://3.142.246.193:9000 to get your report"  
+      - /opt/sonar-scanner/bin/sonar-scanner -Dsonar.projectKey=PMY-COSMETICS -Dsonar.host.url=http://3.138.139.230:9000  -Dsonar.token=squ_11b0b69ff2f4fa899ead36922df509840029c277
+      - echo "STATIC ANALYIS IS DONE PLEASE GO to http://3.138.139.230:9000 to get your report"  
 
   build:
     commands:
       - echo Deploying Code to WebServer
-      - aws s3 cp s3://devopsbucketstorage/Keys/DevOps_Key.pem .
+      - aws s3 cp s3://devopsbucketstoragecapstone .
       - chmod 400 DevOps_Key.pem
-      - scp -i DevOps_Key.pem -o StrictHostKeyChecking=no -r ./Web_Server/* ubuntu@3.12.136.142:./Web_Server
-      - ssh -i DevOps_Key.pem ubuntu@3.12.136.142 'sudo ./copy_to_server.sh'
+      - scp -i DevOps_Key.pem -o StrictHostKeyChecking=no -r ./Web_Server/* ubuntu@3.144.137.149:./Web_Server
+      - ssh -i DevOps_Key.pem ubuntu@3.144.137.149 'sudo ./copy_to_server.sh'
   
   post_build:
     commands:
       - echo Running ZAP Full Scan with Ajax Spider for conducting DAST
       - |
         set +e # disable the 'exit immediately on error' option
-        docker run -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-stable zap-full-scan.py  -t http://3.12.136.142 -c configfiles/tests.conf -d > report.txt
+        docker run -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-stable zap-full-scan.py  -t http://3.144.137.149 -c configfiles/tests.conf -d > report.txt
         if grep -q -E 'FAIL-NEW: [1-9]+' report.txt; then # check if any new failures were detected
-          aws s3 cp report.txt s3://devopsbucketstorage/Reports/OWASP_ZAP_Report_$(date +"%Y-%m-%d-%H-%M-%S").txt
+          aws s3 cp report.txt s3://devopsbucketstoragecapstone/Reports/OWASP_ZAP_Report_$(date +"%Y-%m-%d-%H-%M-%S").txt
           echo "BUILD FAILED AND THE LAST KNOWN STABLE STATE WAS RESTORED BECAUSE A CRITICAL VULNERABILITY WAS DETECTED. PLEASE LOOK AT THE LATEST REPORT FOR FURTHER ANALYSIS"
-          ssh -i DevOps_Key.pem ubuntu@3.12.136.142 'sudo ./implement_rollback.sh'
+          ssh -i DevOps_Key.pem ubuntu@3.144.137.149 'sudo ./implement_rollback.sh'
           exit 0
         else
-          aws s3 cp report.txt s3://devopsbucketstorage/Reports/OWASP_ZAP_Report_$(date +"%Y-%m-%d-%H-%M-%S").txt
+          aws s3 cp report.txt s3://devopsbucketstoragecapstone/Reports/OWASP_ZAP_Report_$(date +"%Y-%m-%d-%H-%M-%S").txt
           echo "BUILD WAS SUCCESFUL and all security standards are met and no critical vulnerabilities were detected"
           exit 0
         fi
