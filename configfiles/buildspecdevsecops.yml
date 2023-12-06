@@ -13,6 +13,7 @@ phases:
       - echo Installing SonarScanner and conducting SAST
       - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
       - unzip sonar-scanner-cli-5.0.1.3006-linux.zip
+      - ls
       - #mv sonar-scanner-5.0.1.3006-linux /opt/sonar-scanner
       - chmod -R 777 sonar-scanner-cli-5.0.1.3006-linux/*
       - ./sonar-scanner-cli-5.0.1.3006-linux/bin/sonar-scanner -Dsonar.projectKey=PMY-COSMETICS -Dsonar.host.url=http://3.138.139.230:9000  -Dsonar.token=sqp_14864a772e36334a6dec083115c57efa16c4bddb
