@@ -38,7 +38,7 @@ phases:
           aws s3 cp report.txt s3://devopsbucketstoragecapstone/Reports/OWASP_ZAP_Report_$(date +"%Y-%m-%d-%H-%M-%S").txt
           echo "BUILD FAILED AND THE LAST KNOWN STABLE STATE WAS RESTORED BECAUSE A CRITICAL VULNERABILITY WAS DETECTED. PLEASE LOOK AT THE LATEST REPORT FOR FURTHER ANALYSIS"
           cd ..        
-          ssh -i DevOps_Key.pem ubuntu@3.12.136.142 'sudo ./implement_rollback.sh'
+          ssh -i DevOps_Key.pem ubuntu@3.144.137.149 'sudo ./implement_rollback.sh'
           exit 0
         else
           aws s3 cp report.txt s3://devopsbucketstoragecapstone/Reports/OWASP_ZAP_Report_$(date +"%Y-%m-%d-%H-%M-%S").txt
