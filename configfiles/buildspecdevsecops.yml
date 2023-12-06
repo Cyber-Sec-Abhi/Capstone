@@ -5,6 +5,7 @@ phases:
     runtime-versions:
       php: 7.4
       docker: 19
+      java: 11
   pre_build:
     commands:
       - echo Installing Docker
