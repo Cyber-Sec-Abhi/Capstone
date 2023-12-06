@@ -37,6 +37,7 @@ phases:
         if grep -q -E 'FAIL-NEW: [1-9]+' report.txt; then # check if any new failures were detected
           aws s3 cp report.txt s3://devopsbucketstoragecapstone/Reports/OWASP_ZAP_Report_$(date +"%Y-%m-%d-%H-%M-%S").txt
           echo "BUILD FAILED AND THE LAST KNOWN STABLE STATE WAS RESTORED BECAUSE A CRITICAL VULNERABILITY WAS DETECTED. PLEASE LOOK AT THE LATEST REPORT FOR FURTHER ANALYSIS"
+          cd ..        
           ssh -i DevOps_Key.pem ubuntu@3.12.136.142 'sudo ./implement_rollback.sh'
           exit 0
         else
@@ -45,3 +46,4 @@ phases:
           exit 0
         fi
         set -e
+        
