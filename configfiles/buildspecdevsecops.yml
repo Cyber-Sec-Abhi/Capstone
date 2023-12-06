@@ -4,7 +4,6 @@ phases:
   install:
     runtime-versions:
       php: 7.4
-      docker: 19
       java: corretto11
   pre_build:
     commands:
