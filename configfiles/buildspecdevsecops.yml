@@ -10,6 +10,7 @@ phases:
     commands:
       - echo Installing Docker
       - yum update -y
+      - yum install -y java-11-amazon-corretto-devel
       - echo Installing SonarScanner and conducting SAST
       - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.4.0.2170-linux.zip
       - unzip sonar-scanner-cli-4.4.0.2170-linux.zip
