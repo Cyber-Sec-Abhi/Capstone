@@ -32,8 +32,6 @@ phases:
     commands:
       - echo Running ZAP Full Scan with Ajax Spider for conducting DAST
       - cd configfiles
-      #- docker run -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-stable zap-full-scan.py -t http://3.144.137.149/index.php -c tests.conf -d > report.txt
-      - cat report.txt
       - |
         set +e # disable the 'exit immediately on error' option
         docker run -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-stable zap-full-scan.py  -t http://3.144.137.149 -c tests.conf > report.txt
