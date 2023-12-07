@@ -11,7 +11,7 @@ phases:
       - echo Installing Docker
       - yum update -y
       - echo Installing SonarScanner and conducting SAST
-      - docker run --rm -e SONAR_HOST_URL=http://3.138.139.230:9000 -e SONAR_LOGIN=sqp_14864a772e36334a6dec083115c57efa16c4bddb -v $CODEBUILD_SRC_DIR:/usr/src sonarsource/sonar-scanner-cli
+      - docker run --rm -e SONAR_HOST_URL=http://3.138.139.230:9000 -e SONAR_LOGIN=sqp_14864a772e36334a6dec083115c57efa16c4bddb -v $CODEBUILD_SRC_DIR:/usr/src --platform linux/arm64/v8 sonarsource/sonar-scanner-cli
       #- wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.4.0.2170-linux.zip
       #- unzip sonar-scanner-cli-4.4.0.2170-linux.zip
       #- mv sonar-scanner-4.4.0.2170-linux /opt/sonar-scanner
