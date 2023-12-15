@@ -10,7 +10,7 @@
       <section id="home">
         <div class="container">
           <h5>NEW PRODUCTS</h5>
-          <h1><span>Best Prices</span> This Year...</h1>
+          <h1><span>Best Prices</span> This Christmas...</h1>
           <p>PMY Cosmetics offers the best products for the most affordable prices</p>
           <button>Shop Now</button>
         </div>
